@@ -1,0 +1,26 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Build results
+x64/
+obj/
+Debug/
+Release/
+
+# Logs
+*.log
+*.tlog
+*.lastbuildstate
+
+# Debug symbols and linker artifacts
+*.pdb
+*.lib
+*.exp
+*.idb
+*.ilk
+
+# Project specific
+*.cer
+*.zip

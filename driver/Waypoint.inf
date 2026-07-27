@@ -1,0 +1,58 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ManufacturerName%
+CatalogFile=Waypoint.cat
+DriverVer=07/27/2026,0.1.0.0
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+Waypoint.sys  = 1,,
+
+[Manufacturer]
+%ManufacturerName%=Standard,NTamd64
+
+[Standard.NTamd64]
+%DeviceName%=Waypoint_Device, Root\WaypointHID
+
+[Waypoint_Device.NT]
+CopyFiles=Drivers_Dir
+
+[Waypoint_Device.NT.HW]
+AddReg=Waypoint_AddReg
+
+[Waypoint_AddReg]
+HKR,,"LowerFilters",0x00010000,"vhf"
+
+[Drivers_Dir]
+Waypoint.sys
+
+[Waypoint_Device.NT.Services]
+AddService = WaypointSvc,%SPSVCINST_ASSOCSERVICE%, Waypoint_Service_Inst
+
+[Waypoint_Service_Inst]
+DisplayName    = %ServiceName%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\Waypoint.sys
+
+[Waypoint_Device.NT.Wdf]
+KmdfService =  WaypointSvc, Waypoint_wdfsect
+
+[Waypoint_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[Strings]
+SPSVCINST_ASSOCSERVICE= 0x00000002
+ManufacturerName="Haaris Khan"
+DiskName = "Waypoint Driver Installation Disk"
+DeviceName="Waypoint Virtual HID Device"
+ServiceName="Waypoint Driver"
